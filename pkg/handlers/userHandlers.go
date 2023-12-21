@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"book-and-rate/pkg/auth"
+	"book-and-rate/pkg/config"
 	"book-and-rate/pkg/db"
 	"book-and-rate/pkg/models"
 	"book-and-rate/pkg/utils"
@@ -139,14 +141,28 @@ func LoginUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = utils.ComparePasswords(user.Password, loginDetails.Password)
-	if err != nil {
+	if err = utils.ComparePasswords(user.Password, loginDetails.Password); err != nil {
 		log.Printf("LoginUserHandler: Password does not match: %v", err)
 		http.Error(w, "Invalid phone number or password", http.StatusUnauthorized)
 		return
 	}
 
+	// Generate JWT Token
+	cfg := config.LoadConfig()
+	accessToken, err := auth.GenerateToken(user.ID.Hex(), *cfg)
+	if err != nil {
+		log.Printf("LoginUserHandler: Error generating access token: %v", err)
+		http.Error(w, "Error generating access token", http.StatusInternalServerError)
+		return
+	}
+
+	refreshToken, err := auth.GenerateRefreshToken(user.ID.Hex(), *cfg)
+	if err != nil {
+		log.Printf("LoginUserHandler: Error generating refresh token: %v", err)
+		http.Error(w, "Error generating refresh token", http.StatusInternalServerError)
+		return
+	}
+
 	log.Printf("LoginUserHandler: User logged in successfully: %v", user.ID)
-	// Return success response or JWT token as needed
-	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"accessToken": accessToken, "refreshToken": refreshToken})
 }

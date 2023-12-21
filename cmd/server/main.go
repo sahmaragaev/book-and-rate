@@ -24,6 +24,7 @@ func main() {
 	routes.RestaurantRoutes(router)
 	routes.BookingRoutes(router)
 	routes.RateRoutes(router)
+	routes.RefreshTokenRoutes(router)
 
 	log.Println("Server is running on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", router))

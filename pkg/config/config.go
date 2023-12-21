@@ -7,7 +7,8 @@ import (
 )
 
 type Config struct {
-	MongoDbUrl string `json:"MongoDbUrl"`
+    MongoDbUrl string `json:"MongoDbUrl"`
+    JwtSecret  string `json:"JwtSecret"`
 }
 
 var configFileName = "./config/config.json"
@@ -18,6 +19,7 @@ func LoadConfig() *Config {
 	configFile, err := os.Open(configFileName)
 	if err != nil {
 		log.Fatal("Cannot open config file: ", err)
+		panic(err)
 	}
 	defer configFile.Close()
 
