@@ -12,8 +12,7 @@ import (
 )
 
 func main() {
-
-	cfg := config.LoadConfig()
+	cfg := config.LoadConfig("config/config.json")
 	db.Connect(cfg.MongoDbUrl)
 	db.InitializeCollections()
 

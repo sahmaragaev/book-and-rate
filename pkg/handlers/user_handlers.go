@@ -148,7 +148,7 @@ func LoginUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate JWT Token
-	cfg := config.LoadConfig()
+	cfg := config.LoadConfig("./config/config.json")
 	accessToken, err := auth.GenerateToken(user.ID.Hex(), *cfg)
 	if err != nil {
 		log.Printf("LoginUserHandler: Error generating access token: %v", err)

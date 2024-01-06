@@ -20,7 +20,3 @@ func Connect(connectionString string) {
 	err = Client.Ping(context.TODO(), nil)
 	log.Println("Connected to MongoDB!")
 }
-
-func GetDbCollection(collectionName string) *mongo.Collection {
-	return Client.Database("bookandrate").Collection(collectionName)
-}

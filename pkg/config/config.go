@@ -7,13 +7,11 @@ import (
 )
 
 type Config struct {
-    MongoDbUrl string `json:"MongoDbUrl"`
-    JwtSecret  string `json:"JwtSecret"`
+	MongoDbUrl string `json:"MongoDbUrl"`
+	JwtSecret  string `json:"JwtSecret"`
 }
 
-var configFileName = "./config/config.json"
-
-func LoadConfig() *Config {
+func LoadConfig(configFileName string) *Config {
 	var config Config
 
 	configFile, err := os.Open(configFileName)

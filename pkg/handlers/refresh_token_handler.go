@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"book-and-rate/pkg/auth"
-	"book-and-rate/pkg/config" // Import the config package
+	"book-and-rate/pkg/config"
 	"encoding/json"
 	"net/http"
 )
@@ -17,7 +17,7 @@ func RefreshTokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Load the configuration
-	cfg := config.LoadConfig()
+	cfg := config.LoadConfig("config/config.json")
 
 	// Validate the refresh token
 	token, err := auth.ValidateToken(tokenRequest.RefreshToken, *cfg)

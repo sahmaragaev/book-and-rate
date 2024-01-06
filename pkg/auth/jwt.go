@@ -30,7 +30,7 @@ func GenerateToken(userID string, cfg config.Config) (string, error) {
 }
 
 func GenerateRefreshToken(userID string, cfg config.Config) (string, error) {
-	expirationTime := time.Now().Add(24 * time.Hour)
+	expirationTime := time.Now().Add(24 * time.Hour * 14)
 
 	claims := &Claims{
 		UserId: userID,

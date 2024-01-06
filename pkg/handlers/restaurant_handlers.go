@@ -179,7 +179,7 @@ func LoginRestaurantHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate JWT Token
-	cfg := config.LoadConfig()
+	cfg := config.LoadConfig("./config/config.json")
 	accessToken, err := auth.GenerateToken(restaurant.ID.Hex(), *cfg)
 	if err != nil {
 		log.Printf("LoginRestaurantHandler: Error generating access token: %v", err)
